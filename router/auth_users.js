@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-let books = require("./booksdb.js");
+let policies = require("./policiesdb.js");
 const regd_users = express.Router();
 
 let users = [];
@@ -16,7 +16,7 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 }
 
 //only registered users can login
-regd_users.post("/login", (req,res) => {    // user /customer/login
+regd_users.post("/login", (req,res) => {    // user /insurance/login
   const {username, password} = req.body;
   // Check if the user is already logged in
   if (req.session.authorization){
@@ -40,7 +40,9 @@ regd_users.post("/login", (req,res) => {    // user /customer/login
   }
 });
 
-// Add a book review
+
+
+// Add a policy review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const newReview = req.body.review;
@@ -48,7 +50,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   
   // Check if the user is authenticated by verifying the JWT token
   if (!req.session.authorization){
-    return res.status(401).json({ message: "Please login in order to add/update books."});
+    return res.status(401).json({ message: "Please login in order to add/update policies."});
   }
 
   let token = req.session.authorization['accessToken'];
@@ -60,23 +62,23 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
     const username = user.username;  // Extract username from decoded token
 
-    // check if the book exists
-    if (!books[isbn]) {
-      return res.status(404).json({ message: "The book was not found."});
+    // check if the policy exists
+    if (!policies[isbn]) {
+      return res.status(404).json({ message: "The policy was not found."});
     }
   
-    // If the book exists, check if the user has already posted a review
-    if (!books[isbn].reviews) {
-      books[isbn].reviews = {};
+    // If the policy exists, check if the user has already posted a review
+    if (!policies[isbn].reviews) {
+      policies[isbn].reviews = {};
     } 
 
     // Check if the user has already posted a review
-    if (books[isbn].reviews[username]){
-      books[isbn].reviews[username] = newReview;
+    if (policies[isbn].reviews[username]){
+      policies[isbn].reviews[username] = newReview;
       return res.status(200).json({ message: "Review updated successfully" });
     } else {
       // If the user has not posted a review, add it
-      books[isbn].reviews[username] = newReview;
+      policies[isbn].reviews[username] = newReview;
       return res.status(201).json({ message: "Review added successfully" });
     }
 
@@ -102,18 +104,18 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
 
     const username = user.username;  // Extract username from decoded token
 
-    // Check if the book exists
-    if (!books[isbn]) {
-      return res.status(404).json({ message: "The book was not found." });
+    // Check if the policy exists
+    if (!policies[isbn]) {
+      return res.status(404).json({ message: "The policy was not found." });
     }
 
-    // Check if the book has reviews
-    if (!books[isbn].reviews || !books[isbn].reviews[username]) {
-      return res.status(404).json({ message: "No review found for this book from the logged-in user." });
+    // Check if the policy has reviews
+    if (!policies[isbn].reviews || !policies[isbn].reviews[username]) {
+      return res.status(404).json({ message: "No review found for this policy from the logged-in user." });
     }
 
     // Delete the user's review
-    delete books[isbn].reviews[username];
+    delete policies[isbn].reviews[username];
     return res.status(200).json({ message: "Review deleted successfully" });
   });
 });

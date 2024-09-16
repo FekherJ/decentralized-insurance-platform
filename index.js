@@ -8,8 +8,17 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/insurance",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
+app.get('/', (req, res) => {
+    res.send('Welcome to the Decentralized Insurance Platform API!');
+});
 
+
+// Update session route for insurance platform
+app.use("/insurance", session({
+    secret: "insurance_secret", 
+    resave: true, 
+    saveUninitialized: true
+}));
 
 app.use("/insurance/auth", function auth(req,res,next){
     if (req.session.authorization) {
@@ -28,9 +37,8 @@ app.use("/insurance/auth", function auth(req,res,next){
 
 });
  
-const PORT =5000;
-
 app.use("/insurance", customer_routes);
 app.use("/", genl_routes);
 
-app.listen(PORT,()=>console.log("Server is running"));
+const PORT =5000;
+app.listen(PORT,()=>console.log("Server is running on port 5000"));

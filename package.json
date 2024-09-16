@@ -10,11 +10,34 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "axios": "^1.7.7",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.19"
+    "jsonwebtoken": "^9.0.2",
+    "node": "^22.8.0",
+    "nodemon": "^3.1.4"
+  },
+  "devDependencies": {
+    "@chainlink/contracts": "^0.4.2",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0", 
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.0",
+    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/hardhat": "^6.0.1",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "ethers": "^6.0.0",
+    "hardhat": "^2.22.10",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.3",
+    "ts-node": "^10.9.2",
+    "typechain": "^8.1.0",
+    "typescript": "^5.6.2"
   }
 }

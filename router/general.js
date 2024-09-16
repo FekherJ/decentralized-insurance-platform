@@ -56,19 +56,19 @@ public_users.get('/policy/:id', async function (req, res) {
 
 // Create a new insurance policy
 public_users.post('/policy/create', (req, res) => {
-    const { insured, premium, event, trigger_condition, payout } = req.body;
+  const { insured, premium, event, trigger_condition, payout } = req.body;
 
-    const newPolicy = {
-        insured,
-        premium,
-        event,
-        trigger_condition,
-        payout,
-        status: "active"
-    };
+  const newPolicy = {
+      insured,
+      premium,
+      event,
+      trigger_condition,
+      payout,
+      status: "active"
+  };
 
-    policies[Object.keys(policies).length + 1] = newPolicy;
-    return res.status(201).json({ message: "Policy created successfully", data: newPolicy });
+  policies[Object.keys(policies).length + 1] = newPolicy;
+  return res.status(201).json({ message: "Policy created successfully", data: newPolicy });
 });
 
 module.exports.general = public_users;
